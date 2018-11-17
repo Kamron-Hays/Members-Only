@@ -1,5 +1,11 @@
 <% if logged_in? %>
-  # display all posts here, along with "new post" button
+  <%= form_for @new_post, url: posts_path do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.label :body %>
+    <%= f.text_area :body, placeholder: "Post inane message here!" %>
+    <%= f.submit "Post", class: 'btn btn-primary post-btn' %>
+  <% end %>
 <% else %>
   <div class="center jumbotron">
     <h1><%= "#{app_name}" %></h1>
@@ -9,5 +15,15 @@
     </h2>
 
     <%= link_to "Sign up", signup_path, class: "btn btn-lg btn-primary" %>
+
+    <h2>
+      Already a member? Click <%= link_to "here", login_path %> to login.
+    </h2>
   </div>
 <% end %>
+
+<ul class="posts">
+  <%= render @posts %>
+</ul>
+
+<%= will_paginate @posts %>
